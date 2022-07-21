@@ -365,6 +365,7 @@ impl<Scalar: PrimeField> AllocatedNum<Scalar> {
     }
 }
 
+#[derive(Clone)]
 pub struct Num<Scalar: PrimeField> {
     value: Option<Scalar>,
     lc: LinearCombination<Scalar>,
