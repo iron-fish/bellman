@@ -413,6 +413,22 @@ impl<Scalar: PrimeField> Num<Scalar> {
             lc: self.lc + &bit.lc(one, coeff),
         }
     }
+
+    #[allow(clippy::should_implement_trait)]
+    pub fn add(self, other: &Self) -> Self {
+        let lc = self.lc + &other.lc;
+        let value = match (self.value, other.value) {
+            (Some(v1), Some(v2)) => {
+                let mut tmp = v1;
+                tmp.add_assign(&v2);
+                Some(tmp)
+            }
+            (Some(v), None) | (None, Some(v)) => Some(v),
+            (None, None) => None,
+        };
+
+        Num { value, lc }
+    }
 }
 
 #[cfg(test)]
